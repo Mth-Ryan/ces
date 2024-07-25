@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ReplProjectCommandManager">
+    <repl-command name="REPL System Reset" executionType="EXPRESSION" selectedForm="TOP_FORM" commandText="(component-repl/reset)" echo="NONE" addToHistory="false" executeBefore="NONE" executeAfter="NONE" executionNs="EXPLICIT_NS" inNamespace="dev" saveAll="true" clearRepl="false" printOutput="true" replaceForm="false" copyResult="false" insertIntoEditor="false" />
+  </component>
+</project>
