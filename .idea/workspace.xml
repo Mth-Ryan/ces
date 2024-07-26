@@ -4,13 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="50916221-c507-4e0b-b24d-5b39edf406d4" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/config.edn" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ces/components/server_component.clj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ces/config.clj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ces/core.clj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ces/routes.clj" afterDir="false" />
+    <list default="true" id="50916221-c507-4e0b-b24d-5b39edf406d4" name="Changes" comment="Initial commit">
+      <change afterPath="$PROJECT_DIR$/src/ces/pages/shop/home.clj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ces/pages/shop/layouts.clj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ces/pages/shop/routes.clj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ces/routes.clj" beforeDir="false" afterPath="$PROJECT_DIR$/src/ces/routes.clj" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,11 +65,11 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "Clojure.ReplCommands",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="ReplState" timestamp="1721948071376">{:repl-history {:ide [], :local [{:command &quot;(in-ns 'ces.core)&quot;, :offset 17, :ns &quot;user&quot;} {:command &quot;(-main)&quot;, :offset 7, :ns &quot;ces.core&quot;} {:command &quot;(in-ns 'dev)&quot;, :offset 12, :ns &quot;user&quot;} {:command &quot;(component-repl/reset)&quot;, :offset 22, :ns &quot;dev&quot;}], :remote []}}</component>
+  <component name="ReplState" timestamp="1721952709153">{:repl-history {:ide [], :local [{:command &quot;(in-ns 'ces.core)&quot;, :offset 17, :ns &quot;user&quot;} {:command &quot;(-main)&quot;, :offset 7, :ns &quot;ces.core&quot;} {:command &quot;(in-ns 'dev)&quot;, :offset 12, :ns &quot;user&quot;} {:command &quot;(component-repl/reset)&quot;, :offset 22, :ns &quot;dev&quot;}], :remote []}}</component>
   <component name="RunManager" selected="Clojure REPL.Repl">
     <configuration default="true" type="Babashka" factoryName="BabashkaLocalRepl" activateToolWindowBeforeRun="false">
       <setting name="displayName" value="" />
@@ -149,12 +148,25 @@
       <option name="presentableId" value="Default" />
       <updated>1721853074786</updated>
       <workItem from="1721853077560" duration="782000" />
-      <workItem from="1721924291132" duration="4793000" />
+      <workItem from="1721924291132" duration="9430000" />
     </task>
+    <task id="LOCAL-00001" summary="Initial commit">
+      <option name="closed" value="true" />
+      <created>1721948130422</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1721948130422</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Initial commit" />
+    <option name="LAST_COMMIT_MESSAGE" value="Initial commit" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

@@ -1,6 +1,7 @@
 (ns ces.routes
   (:require [io.pedestal.http.route :as route]
-            [clojure.set :as set]))
+            [clojure.set :as set]
+            [ces.pages.shop.routes :as shop-routes]))
 
 (defn respond-hello
   [request]
@@ -8,5 +9,5 @@
 
 (def routes
   (-> (set/union 
-        #{["/greet" :get respond-hello :route-name :greet]})
+        shop-routes/routes)
       (route/expand-routes)))
