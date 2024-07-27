@@ -15,7 +15,7 @@
       [:link {:rel "manifest" :href "/site.webmanifest"}]
       [:link {:rel "mask-icon" :href "/safari-pinned-tab.svg" :color "#2d89ef"}]
       [:meta {:name "msapplication-TileColor" :content "#2d89ef"}]
-      (p/include-js "https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,container-queries")]
+      (p/include-css "/css/tailwind/tailwind.min.css")]
      [:body 
       content 
       (p/include-js "https://unpkg.com/htmx.org@2.0.1"

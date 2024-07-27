@@ -4,10 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="50916221-c507-4e0b-b24d-5b39edf406d4" name="Changes" comment="feat(shop): add shop home page">
+    <list default="true" id="50916221-c507-4e0b-b24d-5b39edf406d4" name="Changes" comment="feat(public): add public resources and csp headers">
+      <change afterPath="$PROJECT_DIR$/resources/assets/css/app.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/assets/tailwind.config.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/public/css/tailwind/.gitkeep" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ces/components/tailwind_component.clj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ces/components/server_component.clj" beforeDir="false" afterPath="$PROJECT_DIR$/src/ces/components/server_component.clj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ces/pages/shop/home.clj" beforeDir="false" afterPath="$PROJECT_DIR$/src/ces/pages/shop/home.clj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ces/core.clj" beforeDir="false" afterPath="$PROJECT_DIR$/src/ces/core.clj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ces/pages/shop/layouts.clj" beforeDir="false" afterPath="$PROJECT_DIR$/src/ces/pages/shop/layouts.clj" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -33,6 +37,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Clojure Namespace" />
+        <option value="JavaScript File" />
       </list>
     </option>
   </component>
@@ -68,7 +73,7 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
-  <component name="ReplState" timestamp="1722096004172">{:repl-history {:ide [], :local [{:command &quot;(in-ns 'ces.core)&quot;, :offset 17, :ns &quot;user&quot;} {:command &quot;(-main)&quot;, :offset 7, :ns &quot;ces.core&quot;} {:command &quot;(in-ns 'dev)&quot;, :offset 12, :ns &quot;user&quot;} {:command &quot;(component-repl/reset)&quot;, :offset 22, :ns &quot;dev&quot;}], :remote []}}</component>
+  <component name="ReplState" timestamp="1722118048150">{:repl-history {:ide [], :local [{:command &quot;(in-ns 'ces.core)&quot;, :offset 17, :ns &quot;user&quot;} {:command &quot;(-main)&quot;, :offset 7, :ns &quot;ces.core&quot;} {:command &quot;(in-ns 'dev)&quot;, :offset 12, :ns &quot;user&quot;} {:command &quot;(component-repl/reset)&quot;, :offset 22, :ns &quot;dev&quot;}], :remote []}}</component>
   <component name="RunManager" selected="Clojure REPL.Repl">
     <configuration default="true" type="Babashka" factoryName="BabashkaLocalRepl" activateToolWindowBeforeRun="false">
       <setting name="displayName" value="" />
@@ -148,7 +153,7 @@
       <updated>1721853074786</updated>
       <workItem from="1721853077560" duration="782000" />
       <workItem from="1721924291132" duration="10172000" />
-      <workItem from="1722090706492" duration="2585000" />
+      <workItem from="1722090706492" duration="13415000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <option name="closed" value="true" />
@@ -166,7 +171,15 @@
       <option name="project" value="LOCAL" />
       <updated>1721952944012</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="feat(public): add public resources and csp headers">
+      <option name="closed" value="true" />
+      <created>1722096085537</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1722096085537</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -175,7 +188,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Initial commit" />
     <MESSAGE value="feat(shop): add shop home page" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat(shop): add shop home page" />
+    <MESSAGE value="feat(public): add public resources and csp headers" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat(public): add public resources and csp headers" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
