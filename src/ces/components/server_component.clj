@@ -11,9 +11,11 @@
     [component]
     (println (str ";; Starting Server Component on " (-> config :web-server :port)))
     (let [server (-> {::http/routes routes/routes
-                      ::http/type   :jetty
-                      ::http/join?  false
-                      ::http/port   (-> config :web-server :port)}
+                      ::http/type :jetty
+                      ::http/join? false
+                      ::http/resource-path "public"
+                      ::http/secure-headers {:content-security-policy-settings {:object-src "none"}}
+                      ::http/port (-> config :web-server :port)}
                      (http/create-server)
                      (http/start))]
       (assoc component :server server)))

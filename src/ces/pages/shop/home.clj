@@ -3,7 +3,7 @@
 
 (defn page []
   (layouts/default-layout 
-    "Ecommerce"
+    {:title "Ecommerce"}
     [:p "Hello world!"]))
 
 (defn handler [_request]
