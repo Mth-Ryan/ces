@@ -1,6 +1,7 @@
 (ns ces.pages.shop.layouts
   (:require [hiccup.page :as p]
-            [hiccup2.core :as h]))
+            [hiccup2.core :as h]
+            [ces.pages.shop.components :as components]))
 
 (defn base-layout
   [opts & content]
@@ -21,20 +22,13 @@
       (p/include-js "https://unpkg.com/htmx.org@2.0.1"
                     "https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js")]]))
 
-(defn header
-  []
-  [:header {:class "text-xl"}
-   [:h1 "Ecommerce"]])
-
-(defn footer
-  []
-  [:footer {:class "text-lg"}
-   [:h3 "Ecommerce"]])
 
 (defn default-layout
   [opts & content]
   (base-layout
     opts
-    (header)
-    [:main content]
-    (footer)))
+    [:div {:class "flex h-60 min-h-screen flex-col"}
+     (components/header)
+     [:main {:class "flex-1"}
+      content]
+     (components/footer)]))
