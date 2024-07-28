@@ -11,3 +11,6 @@
   (-> (set/union 
         shop-routes/routes)
       (route/expand-routes)))
+
+
+(def url-for (route/url-for-routes routes))

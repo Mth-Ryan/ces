@@ -23,3 +23,82 @@
      (section {} (if (nil? content) attributes (cons attributes content)))
      (into [:section (merge-with #(str %1 " " %2) {:class "p-6 max-w-screen-lg mx-auto"} attributes)]
            content))))
+
+(defn error-messages
+  ([messages] (error-messages {} messages))
+  ([attributes messages]
+   (when-not (nil? messages)
+     [:ul (merge-with #(str %1 " " %2) 
+                      {:class "text-red-500 text-sm list-disc space-y-0.5 mt-1" 
+                       :style "padding-left: 1rem"} 
+                      attributes)
+      (map (fn [m] [:li m]) messages)])))
+
+(defn text-input
+  [attributes]
+  (let [default-classes "block w-full rounded-md shadow-sm focus:border-primary-400 focus:ring focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500"
+        classes (str default-classes " " (if (nil? (:errors attributes))
+                                           "border-gray-300 focus:ring-primary-200"
+                                           "border-red-300 focus:ring-red-200"))
+        attrs (merge-with #(str %1 " " %2) {:class classes} attributes)]
+    [:div {:class "relative"}
+     [:input (dissoc attrs :errors)]
+     (error-messages (:errors attrs))]))
+
+(defn text-input-with-auto-error-removal
+  [attributes]
+  (let [default-classes "block w-full rounded-md shadow-sm focus:border-primary-400 focus:ring focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500 border-gray-300 focus:ring-primary-200"
+        classes (str default-classes " " (when-not (nil? (:errors attributes))
+                                           "border-red-300 focus:ring-red-200"))
+        attrs (merge-with #(str %1 " " %2) 
+                          {:class classes
+                           :x-ref "input"
+                           "@blur" (str "if (($refs.input.value != initialValue) && errorsPresent) {"
+                                        "  $refs.errors.remove(); errorsPresent = false;"
+                                        "  $refs.input.classList.remove('border-red-300'); $refs.input.classList.remove('focus:ring-red-200');"
+                                        "}") }
+                          (dissoc attributes :x-ref "@blur"))]
+    [:div {:class "relative" 
+           :x-data (format "{ errorsPresent: %s, initialValue: '%s'}" 
+                           (not (nil? (:errors attrs))) 
+                           (get attrs :value ""))}
+     [:input (dissoc attrs :errors)]
+     (error-messages {:x-ref "errors"} (:errors attrs))]))
+
+(defn button
+  [attributes & content]
+  (if-not (map? attributes)
+    (button {} (if (nil? content) attributes (cons attributes content)))
+    (let [default-classes "rounded-lg border px-5 py-2.5 text-center text-sm font-medium transition-all outline-none"
+          classes (str default-classes " " (case (:variant attributes)
+                                             :outline "shadow-sm border-gray-300 bg-white text-gray-700 hover:bg-gray-100 focus:ring focus:ring-primary-200 disabled:cursor-not-allowed disabled:border-gray-100 disabled:bg-gray-50 disabled:text-gray-400"
+                                             :secondary "shadow-sm border-primary-100 bg-primary-100 text-primary-600 hover:border-primary-200 hover:bg-primary-200 focus:ring focus:ring-primary-50 disabled:border-primary-50 disabled:bg-primary-50 disabled:text-primary-40"
+                                             :ghost "border-transparent bg-transparent text-gray-700 shadow-none hover:bg-gray-100 disabled:bg-transparent disabled:text-gray-400"
+                                             "shadow-sm border-primary-500 bg-primary-500 text-white hover:border-primary-700 hover:bg-primary-700 focus:ring focus:ring-primary-200 disabled:cursor-not-allowed disabled:border-primary-300 disabled:bg-primary-300"))
+          attrs (merge-with #(str %1 " " %2) {:class classes} attributes)]
+      (into [:button (dissoc attrs :variant)] content))))
+
+(defn link-button
+  [attributes & content]
+  (if-not (map? attributes)
+    (button {} (if (nil? content) attributes (cons attributes content)))
+    (let [default-classes "rounded-lg border px-5 py-2.5 text-center text-sm font-medium transition-all outline-none"
+          classes (str default-classes " " (case (:variant attributes)
+                                             :outline "shadow-sm border-gray-300 bg-white text-gray-700 hover:bg-gray-100 focus:ring focus:ring-primary-200 disabled:cursor-not-allowed disabled:border-gray-100 disabled:bg-gray-50 disabled:text-gray-400"
+                                             :secondary "shadow-sm border-primary-100 bg-primary-100 text-primary-600 hover:border-primary-200 hover:bg-primary-200 focus:ring focus:ring-primary-50 disabled:border-primary-50 disabled:bg-primary-50 disabled:text-primary-40"
+                                             :ghost "border-transparent bg-transparent text-gray-700 shadow-none hover:bg-gray-100 disabled:bg-transparent disabled:text-gray-400"
+                                             "shadow-sm border-primary-500 bg-primary-500 text-white hover:border-primary-700 hover:bg-primary-700 focus:ring focus:ring-primary-200 disabled:cursor-not-allowed disabled:border-primary-300 disabled:bg-primary-300"))
+          attrs (merge-with #(str %1 " " %2) {:class classes} attributes)]
+      (into [:a (dissoc attrs :variant)] content))))
+
+(defn link
+  [attributes & content]
+  (if-not (map? attributes)
+    (button {} (if (nil? content) attributes (cons attributes content)))
+    (let [default-classes "transition-all duration-300 hover:text-purple-500 focus:text-purple-600 outline-none"
+          classes (str default-classes " " (case (:variant attributes)
+                                             :focus "focus:underline"
+                                             :ghost "text-secondary-500"
+                                             "text-gray-800 underline"))
+          attrs (merge-with #(str %1 " " %2) {:class classes} attributes)]
+      (into [:a (dissoc attrs :variant)] content))))

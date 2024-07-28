@@ -16,6 +16,7 @@
                       ::http/resource-path "public"
                       ::http/secure-headers {:content-security-policy-settings {:object-src "none"}}
                       ::http/port (-> config :web-server :port)}
+                     (http/default-interceptors)
                      (http/create-server)
                      (http/start))]
       (assoc component :server server)))
