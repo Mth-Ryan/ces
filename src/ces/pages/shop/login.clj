@@ -2,16 +2,16 @@
   (:require [ces.pages.shared.components :as shared-components]
             [ces.pages.shop.layouts :as shop-layouts]
             [struct.core :as st]
-            [ces.pages.shared.utils :refer [validate]]
-            [ces.responses :as responses])
-  (:import (java.net URLEncoder)))
+            [ces.pages.shared.utils :refer [validate make-title encode-uri]]
+            [ces.responses :as responses]))
+
 
 (defn form
   ([] (form {}))
   ([data]
    [:form {:class "space-y-3 w-full"
-           :hx-post (str "/entrar/partials/form?return-url=" (URLEncoder/encode (get data :return-url "/") "UTF-8"))
-           :hx-swap "outerHTML"}
+           :hx-post (str "/entrar/partials/form?return-url=" (encode-uri (get data :return-url "/")))
+           :hx-swap "outerHTML transition:true"}
     (shared-components/text-input-with-auto-error-removal
       {:placeholder "voce@email.com"
        :type        "email"
@@ -27,14 +27,18 @@
     (shared-components/error-messages (get-in data [:top-level :errors]))
     (shared-components/button {:type "submit" :class "w-full"} "Entrar")]))
 
-(defn page [context]
-  (shop-layouts/auth-layout
-    {:title "Login"}
-    (shared-components/link-button
-      {:href    (str "/crie-sua-conta?return-url=" (get context :return-url "/"))
-       :class   "absolute top-6 right-6"
-       :variant :ghost}
-      "Crie sua conta")
+
+(defn content
+  [context] 
+  (list 
+    (shared-components/button
+          {:hx-replace-url (str "/crie-sua-conta?return-url=" (get context :return-url "/"))
+           :hx-get (str "/crie-sua-conta/partials/content?return-url=" (get context :return-url "/"))
+           :hx-target "#content"
+           :hx-swap "innerHTML transition:true"
+           :class   "absolute top-6 right-6"
+           :variant :ghost}
+          "Crie sua conta")
 
     [:h1 {:class "font-semibold text-2xl"} "Entrar"]
 
@@ -76,11 +80,23 @@
       (shared-components/link {:href "/politica-de-privacidade"} "Política de Privacidade")]]))
 
 
+(defn page [context]
+  (shop-layouts/auth-layout {:title "Login"} (content context)))
+
+
 (defn handler [request]
   (let [return-url (get-in request [:query-params :return-url] "/")]
     (responses/ok (page {:return-url            return-url
                          :google-redirect-url   "www.google.com"
                          :facebook-redirect-url "www.facebook.com"}))))
+
+
+(defn content-handler [request]
+  (let [return-url (get-in request [:query-params :return-url] "/")]
+    (responses/ok (list [:title (make-title :page-title "Entrar")]
+                        (content {:return-url            return-url
+                                  :google-redirect-url   "www.google.com"
+                                  :facebook-redirect-url "www.facebook.com"})))))
 
 (def login-schema
   {:email    [[st/required :message "Digite seu email para entrar"]]

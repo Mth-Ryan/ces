@@ -5,4 +5,4 @@
   ([body] (ok {} body))
   ([headers body] {:status 200
                    :headers (conj {"Content-Type" "text/html"} headers) 
-                   :body (str (h/html (h/raw "<!DOCTYPE html>") body))}))
+                   :body (str (h/html body))}))

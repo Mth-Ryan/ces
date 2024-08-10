@@ -1,6 +1,8 @@
 (ns ces.pages.shared.utils
   (:require [ces.config :as config]
-            [struct.core :as st]))
+            [struct.core :as st]
+            [org.sqids.clojure :as sqids])
+  (:import (java.net URLEncoder)))
 
 (def app-config
   (get (config/read-config) :app {:shop-title       "Ecommerce"
@@ -19,3 +21,14 @@
     {:valid? (nil? (first result))
      :values (or (second result) {})
      :errors (fmap #(if (string? %) [%] (into [] %)) (or (first result) {}))}))
+
+(defn encode-uri
+  [text]
+  (URLEncoder/encode text "UTF-8"))
+
+(def short-id-options
+  (sqids/sqids))
+
+(defn make-random-short-id 
+  []
+  (sqids/encode short-id-options (take 5 (repeat (rand-int 42)))))

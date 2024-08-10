@@ -151,7 +151,7 @@
     opts
     [:div {:class "flex h-60 min-h-screen flex-col"}
      (header)
-     [:main {:class "flex-1"}
+     [:main {:id "content" :class "flex-1"}
       content]
      (footer)]))
 
@@ -164,6 +164,6 @@
      [:main {:class "flex-1 md:grid grid-cols-2 min-h-screen"}
       [:a {:href "/" :class "absolute top-6 left-6"} (shared-components/logo {:class "h-6"})]
       [:div {:class "hidden md:block w-full h-full bg-center bg-cover bg-[url('/images/auth-hero-banner.webp')]"}]
-      [:div {:class "p-6 flex flex-col w-full h-full items-center justify-center me-auto"}
+      [:div {:id "content" :class "p-6 flex flex-col w-full h-full items-center justify-center me-auto"}
        content]]
      (footer)]))

@@ -1,4 +1,5 @@
-(ns ces.pages.shared.components)
+(ns ces.pages.shared.components
+  (:require [ces.pages.shared.utils :refer [make-random-short-id]]))
 
 (defn logo [attributes]
   [:svg {:viewBox "0 0 127.182 20"
@@ -34,36 +35,66 @@
                       attributes)
       (map (fn [m] [:li m]) messages)])))
 
-(defn text-input
-  [attributes]
-  (let [default-classes "block w-full rounded-md shadow-sm focus:border-primary-400 focus:ring focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500"
-        classes (str default-classes " " (if (nil? (:errors attributes))
-                                           "border-gray-300 focus:ring-primary-200"
-                                           "border-red-300 focus:ring-red-200"))
-        attrs (merge-with #(str %1 " " %2) {:class classes} attributes)]
-    [:div {:class "relative"}
-     [:input (dissoc attrs :errors)]
-     (error-messages (:errors attrs))]))
-
-(defn text-input-with-auto-error-removal
+(defn- text-input-raw
   [attributes]
   (let [default-classes "block w-full rounded-md shadow-sm focus:border-primary-400 focus:ring focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500 border-gray-300 focus:ring-primary-200"
         classes (str default-classes " " (when-not (nil? (:errors attributes))
-                                           "border-red-300 focus:ring-red-200"))
-        attrs (merge-with #(str %1 " " %2) 
-                          {:class classes
-                           :x-ref "input"
-                           "@blur" (str "if (($refs.input.value != initialValue) && errorsPresent) {"
-                                        "  $refs.errors.remove(); errorsPresent = false;"
-                                        "  $refs.input.classList.remove('border-red-300'); $refs.input.classList.remove('focus:ring-red-200');"
-                                        "}") }
-                          (dissoc attributes :x-ref "@blur"))]
-    [:div {:class "relative" 
-           :x-data (format "{ errorsPresent: %s, initialValue: '%s'}" 
-                           (not (nil? (:errors attrs))) 
-                           (get attrs :value ""))}
-     [:input (dissoc attrs :errors)]
-     (error-messages {:x-ref "errors"} (:errors attrs))]))
+                                           "border-red-300 focus:border-red-300 focus:ring-red-200"))
+        attrs (merge-with #(str %1 " " %2) {:class classes} attributes)]
+     [:input (dissoc attrs :errors)]))
+
+
+(defn text-input
+  [attributes]
+  [:div {:class "relative"}
+   (text-input-raw attributes)
+   (error-messages (:errors attributes))])
+
+
+(defn text-input-group
+  [& attributes-list]
+  [:div
+   [:div {:class "flex flex-row gap-2"}
+    (for [attributes attributes-list]
+      (text-input-raw attributes))]
+   [:div
+    (for [attributes attributes-list]
+      (error-messages (:errors attributes)))]])
+
+
+(defn- text-input-raw-with-auto-error-removal
+  [& {:keys [attributes errors-id]}]
+  (let [attrs (merge-with #(str %1 " " %2)
+                          {:oninput (str "let errors = document.getElementById('"errors-id"');"
+                                         "if (errors) errors.remove();"
+                                         "this.classList.remove('border-red-300');"
+                                         "this.classList.remove('focus:border-red-300');"
+                                         "this.classList.remove('focus:ring-red-200');")}
+                          (dissoc attributes :oninput))]
+     (text-input-raw attrs)))
+
+
+(defn text-input-with-auto-error-removal
+  [attributes]
+  (let [errors-id (make-random-short-id)]
+    [:div {:class "relative"}
+     (text-input-raw-with-auto-error-removal 
+       :errors-id errors-id 
+       :attributes attributes)
+     (error-messages {:id errors-id} (:errors attributes))]))
+
+(defn text-input-group-with-auto-error-removal
+  [& attributes-list]
+  (let [atts-list (map #(assoc % :error-id (make-random-short-id)) attributes-list)]
+    [:div
+     [:div {:class "flex flex-row gap-2"}
+      (for [attributes atts-list]
+        (text-input-raw-with-auto-error-removal
+          :errors-id (:error-id attributes) 
+          :attributes (dissoc attributes :error-id)))]
+     [:div
+      (for [attributes atts-list]
+        (error-messages {:id (:error-id attributes)} (:errors attributes)))]]))
 
 (defn button
   [attributes & content]
