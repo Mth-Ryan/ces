@@ -1,14 +1,17 @@
 (ns ces.pages.shop.login
-  (:require [hiccup2.core :as h]
-            [ces.pages.shared.components :as shared-components]
+  (:require [ces.pages.shared.components :as shared-components]
             [ces.pages.shop.layouts :as shop-layouts]
             [struct.core :as st]
-            [ces.pages.shared.utils :refer [validate]]))
+            [ces.pages.shared.utils :refer [validate]]
+            [ces.responses :as responses])
+  (:import (java.net URLEncoder)))
 
 (defn form
   ([] (form {}))
   ([data]
-   [:form {:class "space-y-3 w-full" :hx-post "/entrar/partials/form" :hx-swap "outerHTML"}
+   [:form {:class "space-y-3 w-full"
+           :hx-post (str "/entrar/partials/form?return-url=" (URLEncoder/encode (get data :return-url "/") "UTF-8"))
+           :hx-swap "outerHTML"}
     (shared-components/text-input-with-auto-error-removal
       {:placeholder "voce@email.com"
        :type        "email"
@@ -38,7 +41,7 @@
     [:p {:class "text-gray-500"} "Entre com seu email e senha."]
 
     [:div {:class "mt-4 w-full max-w-96"}
-     (form)
+     (form {:return-url (:return-url context)})
 
      [:div {:class "my-4 flex items-center gap-4 before:h-px before:flex-1 before:bg-gray-300 before:content-[''] after:h-px after:flex-1 after:bg-gray-300 after:content-['']"}
       "Ou continue com"]
@@ -73,18 +76,22 @@
       (shared-components/link {:href "/politica-de-privacidade"} "Política de Privacidade")]]))
 
 
-(defn handler [_request]
-  {:status  200
-   :headers {"Content-Type" "text/html"}
-   :body    (str (page {:google-redirect-url   "www.google.com"
-                        :facebook-redirect-url "www.facebook.com"}))})
+(defn handler [request]
+  (let [return-url (get-in request [:query-params :return-url] "/")]
+    (responses/ok (page {:return-url            return-url
+                         :google-redirect-url   "www.google.com"
+                         :facebook-redirect-url "www.facebook.com"}))))
 
 (def login-schema
   {:email    [[st/required :message "Digite seu email para entrar"]]
    :password [[st/required :message "Digite sua senha para entrar"]]})
 
 (defn form-handler [request]
-  (let [result (validate (:form-params request) login-schema)]
-    {:status  200
-     :headers {"Content-Type" "text/html"}
-     :body    (str (h/html (form result)))}))
+  (let [return-url (get-in request [:query-params :return-url] "/")
+        result (-> request
+                   (:form-params)
+                   (validate login-schema)
+                   (conj {:return-url return-url}))]
+    (if (:valid? result)
+      (responses/ok {"HX-Redirect" return-url} (form result))
+      (responses/ok (form result)))))

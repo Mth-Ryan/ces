@@ -1,6 +1,7 @@
 (ns ces.pages.shop.home
   (:require [ces.pages.shop.layouts :as layouts]
-            [ces.pages.shared.components :as shared-components]))
+            [ces.pages.shared.components :as shared-components]
+            [ces.responses :as responses]))
 
 (defn page []
   (layouts/default-layout 
@@ -8,6 +9,4 @@
     (shared-components/section [:p "Hello world!"])))
 
 (defn handler [_request]
-  {:status 200
-   :headers {"Content-Type" "text/html"}
-   :body (str (page))})
+  (responses/ok (page)))
