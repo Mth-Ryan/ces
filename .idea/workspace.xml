@@ -4,15 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="50916221-c507-4e0b-b24d-5b39edf406d4" name="Changes" comment="feat(login): add login redirect logic">
-      <change afterPath="$PROJECT_DIR$/src/ces/pages/shop/signup.clj" afterDir="false" />
+    <list default="true" id="50916221-c507-4e0b-b24d-5b39edf406d4" name="Changes" comment="feat(auth): add login and signup pages implementation">
+      <change afterPath="$PROJECT_DIR$/src/ces/pages/shop/account.clj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/deps.edn" beforeDir="false" afterPath="$PROJECT_DIR$/deps.edn" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/assets/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/resources/assets/css/app.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ces/pages/shared/components.clj" beforeDir="false" afterPath="$PROJECT_DIR$/src/ces/pages/shared/components.clj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ces/pages/shared/layouts.clj" beforeDir="false" afterPath="$PROJECT_DIR$/src/ces/pages/shared/layouts.clj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ces/pages/shared/utils.clj" beforeDir="false" afterPath="$PROJECT_DIR$/src/ces/pages/shared/utils.clj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ces/pages/shop/layouts.clj" beforeDir="false" afterPath="$PROJECT_DIR$/src/ces/pages/shop/layouts.clj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ces/pages/shop/login.clj" beforeDir="false" afterPath="$PROJECT_DIR$/src/ces/pages/shop/login.clj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ces/pages/shop/routes.clj" beforeDir="false" afterPath="$PROJECT_DIR$/src/ces/pages/shop/routes.clj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ces/responses.clj" beforeDir="false" afterPath="$PROJECT_DIR$/src/ces/responses.clj" afterDir="false" />
     </list>
@@ -77,7 +74,7 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="ReplState" timestamp="1723315165449">{:repl-history {:ide [], :local [{:command &quot;(in-ns 'ces.core)&quot;, :offset 17, :ns &quot;user&quot;} {:command &quot;(-main)&quot;, :offset 7, :ns &quot;ces.core&quot;} {:command &quot;(in-ns 'dev)&quot;, :offset 12, :ns &quot;user&quot;} {:command &quot;(component-repl/reset)&quot;, :offset 22, :ns &quot;dev&quot;} {:command &quot;(require '[sqids])&quot;, :offset 18, :ns &quot;user&quot;}], :remote []}}</component>
+  <component name="ReplState" timestamp="1723339428593">{:repl-history {:ide [], :local [{:command &quot;(in-ns 'ces.core)&quot;, :offset 17, :ns &quot;user&quot;} {:command &quot;(-main)&quot;, :offset 7, :ns &quot;ces.core&quot;} {:command &quot;(in-ns 'dev)&quot;, :offset 12, :ns &quot;user&quot;} {:command &quot;(component-repl/reset)&quot;, :offset 22, :ns &quot;dev&quot;} {:command &quot;(require '[sqids])&quot;, :offset 18, :ns &quot;user&quot;}], :remote []}}</component>
   <component name="RunManager" selected="Clojure REPL.Repl">
     <configuration default="true" type="Babashka" factoryName="BabashkaLocalRepl" activateToolWindowBeforeRun="false">
       <setting name="displayName" value="" />
@@ -150,7 +147,7 @@
       <workItem from="1722090706492" duration="36361000" />
       <workItem from="1722198772265" duration="6812000" />
       <workItem from="1722277287097" duration="3000" />
-      <workItem from="1723292106114" duration="15111000" />
+      <workItem from="1723292106114" duration="34753000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <option name="closed" value="true" />
@@ -240,7 +237,15 @@
       <option name="project" value="LOCAL" />
       <updated>1723295483869</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="feat(auth): add login and signup pages implementation">
+      <option name="closed" value="true" />
+      <created>1723316011538</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1723316011538</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -256,7 +261,8 @@
     <MESSAGE value="feat(shared): change directory structure" />
     <MESSAGE value="feat(login): add login view" />
     <MESSAGE value="feat(login): add login redirect logic" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat(login): add login redirect logic" />
+    <MESSAGE value="feat(auth): add login and signup pages implementation" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat(auth): add login and signup pages implementation" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

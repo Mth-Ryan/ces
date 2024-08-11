@@ -17,22 +17,26 @@
            :transform        "matrix(.79477 0 0 .79477 .463 .463)"
            :data-v-inspector "components/Logo.vue:8:5"}]])
 
+(defn merge-attributes
+  [defaults attributes]
+  (merge-with #(str %1 " " %2) defaults attributes))
+
 (defn section
   ([] (section {}))
   ([attributes & content]
    (if-not (map? attributes)
      (section {} (if (nil? content) attributes (cons attributes content)))
-     (into [:section (merge-with #(str %1 " " %2) {:class "p-6 max-w-screen-lg mx-auto"} attributes)]
+     (into [:section (merge-attributes {:class "p-6 max-w-screen-lg mx-auto"} attributes)]
            content))))
 
 (defn error-messages
   ([messages] (error-messages {} messages))
   ([attributes messages]
    (when-not (nil? messages)
-     [:ul (merge-with #(str %1 " " %2) 
-                      {:class "text-red-500 text-sm list-disc space-y-0.5 mt-1" 
-                       :style "padding-left: 1rem"} 
-                      attributes)
+     [:ul (merge-attributes
+            {:class "text-red-500 text-sm list-disc space-y-0.5 mt-1"
+             :style "padding-left: 1rem"}
+            attributes)
       (map (fn [m] [:li m]) messages)])))
 
 (defn- text-input-raw
@@ -40,8 +44,8 @@
   (let [default-classes "block w-full rounded-md shadow-sm focus:border-primary-400 focus:ring focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500 border-gray-300 focus:ring-primary-200"
         classes (str default-classes " " (when-not (nil? (:errors attributes))
                                            "border-red-300 focus:border-red-300 focus:ring-red-200"))
-        attrs (merge-with #(str %1 " " %2) {:class classes} attributes)]
-     [:input (dissoc attrs :errors)]))
+        attrs (merge-attributes {:class classes} attributes)]
+    [:input (dissoc attrs :errors)]))
 
 
 (defn text-input
@@ -64,24 +68,24 @@
 
 (defn- text-input-raw-with-auto-error-removal
   [& {:keys [attributes errors-id]}]
-  (let [attrs (merge-with #(str %1 " " %2)
-                          {:oninput (str "let errors = document.getElementById('"errors-id"');"
-                                         "if (errors) errors.remove();"
-                                         "this.classList.remove('border-red-300');"
-                                         "this.classList.remove('focus:border-red-300');"
-                                         "this.classList.remove('focus:ring-red-200');")}
-                          (dissoc attributes :oninput))]
-     (text-input-raw attrs)))
+  (let [on-input (str "let errors = document.getElementById('" errors-id "');"
+                      "if (errors) errors.remove();"
+                      "this.classList.remove('border-red-300');"
+                      "this.classList.remove('focus:border-red-300');"
+                      "this.classList.remove('focus:ring-red-200');")
+        attrs (merge-attributes {:oninput on-input} (dissoc attributes :oninput))]
+    (text-input-raw attrs)))
 
 
 (defn text-input-with-auto-error-removal
   [attributes]
   (let [errors-id (make-random-short-id)]
     [:div {:class "relative"}
-     (text-input-raw-with-auto-error-removal 
-       :errors-id errors-id 
+     (text-input-raw-with-auto-error-removal
+       :errors-id errors-id
        :attributes attributes)
      (error-messages {:id errors-id} (:errors attributes))]))
+
 
 (defn text-input-group-with-auto-error-removal
   [& attributes-list]
@@ -90,11 +94,12 @@
      [:div {:class "flex flex-row gap-2"}
       (for [attributes atts-list]
         (text-input-raw-with-auto-error-removal
-          :errors-id (:error-id attributes) 
+          :errors-id (:error-id attributes)
           :attributes (dissoc attributes :error-id)))]
      [:div
       (for [attributes atts-list]
         (error-messages {:id (:error-id attributes)} (:errors attributes)))]]))
+
 
 (defn button
   [attributes & content]
@@ -106,8 +111,9 @@
                                              :secondary "shadow-sm border-primary-100 bg-primary-100 text-primary-600 hover:border-primary-200 hover:bg-primary-200 focus:ring focus:ring-primary-50 disabled:border-primary-50 disabled:bg-primary-50 disabled:text-primary-40"
                                              :ghost "border-transparent bg-transparent text-gray-700 shadow-none hover:bg-gray-100 disabled:bg-transparent disabled:text-gray-400"
                                              "shadow-sm border-primary-500 bg-primary-500 text-white hover:border-primary-700 hover:bg-primary-700 focus:ring focus:ring-primary-200 disabled:cursor-not-allowed disabled:border-primary-300 disabled:bg-primary-300"))
-          attrs (merge-with #(str %1 " " %2) {:class classes} attributes)]
+          attrs (merge-attributes {:class classes} attributes)]
       (into [:button (dissoc attrs :variant)] content))))
+
 
 (defn link-button
   [attributes & content]
@@ -119,8 +125,9 @@
                                              :secondary "shadow-sm border-primary-100 bg-primary-100 text-primary-600 hover:border-primary-200 hover:bg-primary-200 focus:ring focus:ring-primary-50 disabled:border-primary-50 disabled:bg-primary-50 disabled:text-primary-40"
                                              :ghost "border-transparent bg-transparent text-gray-700 shadow-none hover:bg-gray-100 disabled:bg-transparent disabled:text-gray-400"
                                              "shadow-sm border-primary-500 bg-primary-500 text-white hover:border-primary-700 hover:bg-primary-700 focus:ring focus:ring-primary-200 disabled:cursor-not-allowed disabled:border-primary-300 disabled:bg-primary-300"))
-          attrs (merge-with #(str %1 " " %2) {:class classes} attributes)]
+          attrs (merge-attributes {:class classes} attributes)]
       (into [:a (dissoc attrs :variant)] content))))
+
 
 (defn link
   [attributes & content]
@@ -131,5 +138,42 @@
                                              :focus "focus:underline"
                                              :ghost "text-secondary-500"
                                              "text-gray-800 underline"))
-          attrs (merge-with #(str %1 " " %2) {:class classes} attributes)]
+          attrs (merge-attributes {:class classes} attributes)]
       (into [:a (dissoc attrs :variant)] content))))
+
+
+(defn modal
+  ([content] (modal {} content))
+  ([attributes & content]
+   (let [atts (merge-attributes {:data-modal ""
+                                 :class      "relative"
+                                 :onclick    "if (event.target == this) this.close();"
+                                 :onclose    "document.body.style.removeProperty('overflow')"}
+                                (dissoc attributes :data-modal))]
+     [:dialog atts
+      [:div {:class "flex-1 h-full w-full flex flex-col"}
+       [:form {:class "absolute top-2 right-4" :method "dialog"}
+        [:button {:type  "submit"
+                  :class "rounded-lg border border-transparent bg-transparent p-1.5 text-center text-sm font-medium text-gray-700 shadow-none transition-all hover:bg-gray-100 disabled:bg-transparent disabled:text-gray-400"}
+         [:svg {:class "size-6" :xmlns "http://www.w3.org/2000/svg" :fill "none" :viewBox "0 0 24 24" :stroke-width "1.5" :stroke "currentColor"}
+          [:path {:stroke-linecap "round" :stroke-linejoin "round" :d "M5 18 18 6M6 6l12 12"}]]]]
+       content]])))
+
+
+(defn sheet
+  ([content] (sheet {} content))
+  ([attributes & content]
+   (let [attrs (merge-attributes {:data-sheet (get attributes :variant :left)
+                                  :onclick    "if (event.target == this) this.close();"
+                                  :onclose    "document.body.style.removeProperty('overflow')"}
+                                 (dissoc attributes :data-sheet))]
+     [:dialog (dissoc attrs :title :variant)
+      [:div {:class "flex-1 h-full w-full flex flex-col"}
+       [:div {:class "flex flex-row justify-between items-center gap-4 px-4 py-2 bg-secondary-50 border-secondary-100 border-b"}
+        [:span {:class "text-lg font-medium text-secondary-700"} (get attrs :title "")]
+        [:form {:method "dialog"}
+         [:button {:type  "submit"
+                   :class "rounded-lg border border-transparent bg-transparent p-1.5 text-center text-sm font-medium text-secondary-500 shadow-none transition-all hover:bg-gray-100 disabled:bg-transparent disabled:text-gray-400"}
+          [:svg {:class "size-6" :xmlns "http://www.w3.org/2000/svg" :fill "none" :viewBox "0 0 24 24" :stroke-width "1.5" :stroke "currentColor"}
+           [:path {:stroke-linecap "round" :stroke-linejoin "round" :d "M5 18 18 6M6 6l12 12"}]]]]]
+       content]])))
