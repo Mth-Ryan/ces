@@ -72,7 +72,9 @@
   (start
     [component]
     (println (str ";; Starting Tailwind Component"))
-    (let [process (run-cli :watch true)]
+    (let [prod? (not= (get config :run-env :dev) :dev)
+          process (run-cli :watch (not prod?) 
+                           :minify prod?)]
       (assoc component :process-opts process)))
 
   (stop

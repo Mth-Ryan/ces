@@ -1,3 +1,4 @@
 {:app        {:shop-title       "Ecommerce"
               :management-title "Ecommerce Management"}
- :web-server {:port #long #or [#env CES_PORT 8000]}}
+ :web-server {:port #long #or [#env CES_PORT 8000]}
+ :run-env    :dev}

@@ -4,9 +4,12 @@
             [org.sqids.clojure :as sqids])
   (:import (java.net URLEncoder)))
 
+(def config
+  (config/read-config))
+
 (def app-config
-  (get (config/read-config) :app {:shop-title       "Ecommerce"
-                                  :management-title "Ecommerce Management"}))
+  (get config :app {:shop-title       "Ecommerce"
+                    :management-title "Ecommerce Management"}))
 
 (defn make-title
   [& {:keys [page-title variant] :or {page-title nil, variant :shop-title}}]
@@ -29,6 +32,6 @@
 (def short-id-options
   (sqids/sqids))
 
-(defn make-random-short-id 
+(defn make-random-short-id
   []
   (sqids/encode short-id-options (take 5 (repeat (rand-int 42)))))
