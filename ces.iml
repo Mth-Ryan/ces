@@ -19,6 +19,7 @@
     <orderEntry type="library" name="Deps: javax.activation/javax.activation-api:1.2.0" level="project" />
     <orderEntry type="library" name="Deps: commons-codec:1.16.1" level="project" />
     <orderEntry type="library" name="Deps: org.clojure/tools.analyzer:1.1.1" level="project" />
+    <orderEntry type="library" name="Deps: org.sqids/sqids:0.1.0" level="project" />
     <orderEntry type="library" name="Deps: org.eclipse.jetty/jetty-xml:11.0.20" level="project" />
     <orderEntry type="library" name="Deps: org.eclipse.jetty/jetty-servlet:11.0.20" level="project" />
     <orderEntry type="library" name="Deps: org.clojure/core.specs.alpha:0.2.62" level="project" />
@@ -41,6 +42,7 @@
     <orderEntry type="library" name="Deps: org.eclipse.jetty.websocket/websocket-core-common:11.0.20" level="project" />
     <orderEntry type="library" name="Deps: io.pedestal/pedestal.service:0.7.0" level="project" />
     <orderEntry type="library" name="Deps: com.googlecode.json-simple/json-simple:1.1.1" level="project" />
+    <orderEntry type="library" name="Deps: org.sqids/sqids-clojure:1.0.15" level="project" />
     <orderEntry type="library" name="Deps: com.stuartsierra/component:1.1.0" level="project" />
     <orderEntry type="library" name="Deps: commons-io:2.15.1" level="project" />
     <orderEntry type="library" name="Deps: org.eclipse.jetty.websocket/websocket-core-server:11.0.20" level="project" />
@@ -67,6 +69,7 @@
     <orderEntry type="library" name="Deps: org.javassist/javassist:3.18.1-GA" level="project" />
     <orderEntry type="library" name="Deps: org.eclipse.jetty/jetty-webapp:11.0.20" level="project" />
     <orderEntry type="library" name="Deps: org.clojure/java.classpath:1.0.0" level="project" />
+    <orderEntry type="library" name="Deps: borkdude/dynaload:0.3.5" level="project" />
     <orderEntry type="library" name="Deps: io.pedestal/pedestal.telemetry:0.7.0" level="project" />
     <orderEntry type="library" name="Deps: org.eclipse.jetty.http2/http2-common:11.0.20" level="project" />
     <orderEntry type="library" name="Deps: org.msgpack/msgpack:0.6.12" level="project" />

@@ -2,7 +2,9 @@
   (:require [ces.config :as config]
             [struct.core :as st]
             [org.sqids.clojure :as sqids])
-  (:import (java.net URLEncoder)))
+  (:import (java.net URLEncoder))
+  (:import (java.text NumberFormat))
+  (:import (java.util Locale)))
 
 (def config
   (config/read-config))
@@ -35,3 +37,8 @@
 (defn make-random-short-id
   []
   (sqids/encode short-id-options (take 5 (repeat (rand-int 42)))))
+
+(defn format-currency [amount]
+  (let [locale (Locale/forLanguageTag "pt-BR")
+        formatter (NumberFormat/getCurrencyInstance locale)]
+    (.format formatter amount)))

@@ -60,7 +60,7 @@
 
 (defn text-input
   [attributes]
-  [:div {:class "relative"}
+  [:div {:class "relative w-full"}
    (text-input-raw attributes)
    (error-messages (:errors attributes))])
 

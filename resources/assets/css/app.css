@@ -143,6 +143,7 @@
         background-color: white;
         transition: display .3s allow-discrete, overlay .3s allow-discrete;
         animation: fade-out .3s ease-out;
+        overflow: hidden;
         @apply border;
         @apply border-secondary-200;
         @apply shadow-xl;

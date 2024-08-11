@@ -1,7 +1,7 @@
 (ns ces.pages.shop.layouts
   (:require [ces.pages.shared.components :as shared-components]
             [ces.pages.shared.layouts :as shared-layouts]
-            [ces.pages.shared.utils :refer [make-title]]))
+            [ces.pages.shared.utils :refer [make-title format-currency]]))
 
 (defn menu-button []
   [:button {:type    "button"
@@ -257,17 +257,118 @@
              :sub-categories (list {:title "Batoms" :slug "batoms"}
                                    {:title "Base" :slug "base"})}))))
 
+(defn shopping-cart-list
+  ([]
+   [:ul {:class "flex-1 w-full overflow-y-auto"}
+    (for [i (take 5 (range))]
+      [:li {:class "w-full p-4 flex gap-4"}
+       ;; Thumb
+       [:div.skeleton {:class "size-20 sm:size-24 rounded-md self-center"}]
+
+       ;; Info
+       [:div {:class "flex-1 flex flex-col gap-2"}
+        [:span.skeleton.text.sm {:class "w-10/12"}]
+        [:span.skeleton.text.sm {:class "mt-1 w-8/12"}]
+        [:div {:class "flex gap-2 items-end mt-2"}
+         [:span.skeleton.text.sm {:class "w-[6ch]"}]
+         [:span.skeleton.text.xs {:class "w-[6ch]"}]]]
+
+       ;; Count control
+       [:div {:class "flex flex-col items-center gap-3 self-center text-secondary-800"}
+        [:div.skeleton {:class "size-6 rounded-full"}]
+        [:span.skeleton.text.sm {:class "w-[1ch]"}]
+        [:div.skeleton {:class "size-6 rounded-full"}]]])])
+  ([items]
+   (if (= (count items) 0)
+     [:div {:class "flex-1 w-full flex flex-col items-center justify-center text-center text-secondary-500 gap-8"}
+      [:svg {:class "size-24 text-secondary-300" :xmlns "http://www.w3.org/2000/svg" :fill "none" :viewBox "0 0 24 24" :stroke-width "1.5" :stroke "currentColor"}
+       [:path {:stroke-linecap "round" :stroke-linejoin "round" :d "M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"}]]
+      [:span {:class "max-w-[30ch]"}
+       "Adicione items ao seu carrinho para iniciar um pedido"]]
+     [:ul {:class "flex-1 w-full overflow-y-auto"}
+      (for [item items]
+        [:li {:class "w-full p-4 flex gap-4"}
+         ;; Thumb
+         [:img {:src   (:thumb item)
+                :class "size-20 sm:size-24 rounded-md object-cover object-center self-center"}]
+
+         ;; Info
+         [:div {:class "flex-1 flex flex-col gap-2"}
+          [:span {:class "font-medium text-secondary-700 line-clamp-2"}
+           (:title item)]
+          [:div {:class "flex gap-2 items-end"}
+           [:span {:class "font-semibold text-secondary-800"}
+            (format-currency (:final-price item))]
+           [:span {:class "text-xs text-secondary-500 line-through"}
+            (format-currency (:original-price item))]]]
+
+         ;; Count control
+         [:div {:class "flex flex-col items-center gap-3 self-center text-secondary-800"}
+          [:button {:class "rounded-full border border-secondary-200 p-1 bg-white hover:bg-gray-100 focus:ring focus:ring-gray-100 disabled:cursor-not-allowed disabled:border-gray-100 disabled:bg-gray-50 disabled:text-gray-400 shadow-sm"}
+           [:svg {:class "size-4" :xmlns "http://www.w3.org/2000/svg" :fill "none" :viewBox "0 0 24 24" :stroke-width "1.5" :stroke "currentColor"}
+            [:path {:stroke-linecap "round" :stroke-linejoin "round" :d "M12 4.5v15m7.5-7.5h-15"}]]]
+          [:span {:class "text-secondary-700 font-medium"}
+           (:count item)]
+          [:button {:class "rounded-full border border-secondary-200 p-1 bg-white hover:bg-gray-100 focus:ring focus:ring-gray-100 disabled:cursor-not-allowed disabled:border-gray-100 disabled:bg-gray-50 disabled:text-gray-400 shadow-sm"}
+           (if (<= 2 (:count item))
+             [:svg. {:class "size-4" :xmlns "http://www.w3.org/2000/svg" :fill "none" :viewBox "0 0 24 24" :stroke-width "1.5" :stroke "currentColor"}
+              [:path {:stroke-linecap "round" :stroke-linejoin "round" :d "M5 12h14"}]]
+             [:svg {:class "size-4" :xmlns "http://www.w3.org/2000/svg" :fill "none" :viewBox "0 0 24 24" :stroke-width "1.5" :stroke "currentColor"}
+              [:path {:stroke-linecap "round" :stroke-linejoin "round" :d "m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"}]])]]])])))
+
+(defn shopping-cart-calculate-delivery
+  [items]
+  [:div {:class "p-4 border-t border-secondary-200 flex gap-4 text-secondary-700"}
+   [:div {:class "w-full"}
+    [:div {:class "flex gap-4 justify-between items-center"}
+     [:span {:class "font-medium"} "Calcule seu Frete"]
+     [:a {:title "Como descobrir meu CEP?"
+          :target "_blank"
+          :href  "https://buscacepinter.correios.com.br/app/endereco/index.php"
+          :class "flex gap-2 items-center"}
+      [:span {:class "text-sm text-secondary-500"} "Não sei meu CEP"]
+      [:span {:class "flex items-center justify-center size-5 text-white bg-secondary-400 text-xs rounded-full"} "?"]]]
+    [:form {:class "flex gap-2 w-full mt-4"}
+     (shared-components/text-input {:type "text" :name "cep" :placeholder "Digite seu CEP" :class "flex-1"})
+     (shared-components/button {:variant :secondary} "Calcular")]]])
+
+(defn shopping-cart-action-buttons
+  [items]
+  [:div {:class "p-4 border-t border-secondary-200 flex flex-wrap-reverse gap-4 bg-secondary-50"}
+   (shared-components/button
+     {:class "flex-1 min-w-fit text-nowrap" :variant :outline :onclick "document.getElementById('shopping-cart').close();"}
+     "Continuar comprando")
+   (when-not (= (count items) 0)
+     (shared-components/button
+       {:class "flex-1 flex gap-2 items-center justify-center min-w-fit text-nowrap"}
+       [:svg {:class "size-5" :xmlns "http://www.w3.org/2000/svg" :fill "none" :viewBox "0 0 24 24" :stroke-width "1.5" :stroke "currentColor"}
+        [:path {:stroke-linecap "round" :stroke-linejoin "round" :d "M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"}]]
+       "Finalizar compra"))])
+
 (defn shopping-cart
   []
   (shared-components/sheet
-    {:id "shopping-cart" :variant :right :title "Carrinho"}
-    [:h1 "Hello world"]))
+    {:id "shopping-cart" :variant :right :title "Carrinho" :style "max-width: 500px"}
+    (let [items (list {:title          "Combo Siàge Pro Cronology Cronograma Capilar Acelerado Completo (4 itens)"
+                       :count          1
+                       :original-price 387.87
+                       :final-price    287.87
+                       :thumb          "https://nagtgkjtgxsetolrcdhw.supabase.co/storage/v1/object/public/images/91ab0668-cca4-4655-bc84-20169ac636a0.webp"}
+                      {:title          "Eudora H Refresh Desodorante Colônia 100ml"
+                       :count          2
+                       :original-price 99.90
+                       :final-price    89.90
+                       :thumb          "https://nagtgkjtgxsetolrcdhw.supabase.co/storage/v1/object/public/images/4ce1be4d-5b00-4651-b4f2-6292c9fc0611.webp"})]
+      (list
+        (shopping-cart-list items)
+        (shopping-cart-calculate-delivery items)
+        (shopping-cart-action-buttons items)))))
 
 (defn search-modal
   []
   (shared-components/modal
     {:id "search-modal"}
-    [:h1 "Hello world"]))
+    [:h1 "Hello"]))
 
 
 (defn bottom-menu
