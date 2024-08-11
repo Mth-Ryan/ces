@@ -1,5 +1,6 @@
 (ns ces.pages.shared.components
-  (:require [ces.pages.shared.utils :refer [make-random-short-id]]))
+  (:require [ces.pages.shared.utils :refer [make-random-short-id]]
+            [clojure.string :refer [blank?]]))
 
 (defn logo [attributes]
   [:svg {:viewBox "0 0 127.182 20"
@@ -20,6 +21,15 @@
 (defn merge-attributes
   [defaults attributes]
   (merge-with #(str %1 " " %2) defaults attributes))
+
+(defn avatar
+  ([] (avatar ""))
+  ([img-src]
+   [:div {:class "rounded-full overflow-hidden bg-secondary-300 text-white flex items-center justify-center size-12"}
+    (if (blank? img-src)
+      [:svg {:class "size-6" :xmlns "http://www.w3.org/2000/svg" :fill "none" :viewBox "0 0 24 24" :stroke-width "1.5" :stroke "currentColor"}
+       [:path {:stroke-linecap "round" :stroke-linejoin "round" :d "M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"}]]
+      [:img {:src img-src :class "object-center object-cover rounded-full h-full w-full"}])]))
 
 (defn section
   ([] (section {}))

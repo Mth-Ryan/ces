@@ -79,6 +79,58 @@
         overflow-x: hidden;
     }
 
+    ::-webkit-scrollbar {
+        width: 0.2rem;
+    }
+    
+    ::-webkit-scrollbar-button {
+        height: 0;
+        width: 0;
+        display:none;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background-color: rgb(226 232 240);
+        border: none;
+    }
+
+    /* Style for Firefox */
+    * {
+        scrollbar-width: thin;
+        scrollbar-color: rgb(226 232 240) transparent;
+    }
+
+    /* Skeletons */
+    .skeleton {
+        @apply bg-secondary-100;
+        @apply animate-pulse;
+    }
+    
+    .skeleton.text {
+        height: 1rem;
+        @apply rounded-md;
+    }
+
+    .skeleton.text.sm {
+        height: .875rem;
+    }
+    
+    .skeleton.text.xs {
+        height: .75rem;
+    }
+
+    .skeleton.text.lg {
+        height: 1.125rem;
+    }
+
+    .skeleton.text.xl {
+        height: 1.25rem;
+    }
+    
     /* Dialog */
     dialog:modal {
         max-height: 100vh;
@@ -114,17 +166,17 @@
         width: 100%;
         border-radius: 0;
         box-shadow: 3px 0 20px rgb(0, 0, 0, .05);
-        border-left-width: 1px;
         animation: slide-to-left .3s ease-out;
-        @apply border-secondary-200;
+        @apply border-0;
+        @apply border-r;
     }
 
     dialog[data-sheet=right] {
         margin-left: auto;
         box-shadow: -3px 0 20px rgb(0, 0, 0, .05);
-        border-left-width: 0;
-        border-right-width: 1px;
         animation: slide-to-right .3s ease-out;
+        @apply border-0;
+        @apply border-l;
     }
     
     dialog[data-sheet][open] {
@@ -134,6 +186,16 @@
     dialog[data-sheet=right][open] {
         animation: slide-from-right .3s ease-out;
     }
+    
+    /* Accordion */
+    details:not([open]) [data-accordion-icon-close] {
+        display: none;
+    }
+    
+    details[open] [data-accordion-icon-open] {
+        display: none;
+    }
+
     
     /* Shopping cart button */
     #shopping-cart-button[data-count]::before {

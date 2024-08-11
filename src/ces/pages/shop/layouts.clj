@@ -49,14 +49,13 @@
    [:div {:class "max-w-screen-lg mx-auto flex items-center justify-between px-6 text-secondary-700"}
 
     [:div {:class "flex gap-4"}
-     (menu-button)
-     (search-button)]
+     (menu-button)]
     [:a {:href  "/"
          :title (make-title)}
      (shared-components/logo {:class "h-5 w-auto"})]
     [:div {:class "flex gap-4"}
      (cart-button)
-     (account-button)]]])
+     (search-button)]]])
 
 
 (defn footer []
@@ -169,11 +168,94 @@
               :class "transition-colors duration-300 hover:text-purple-500 focus:text-purple-600"}
           "Join research"]]]]]]]])
 
+(defn user-menu-section
+  ([]
+   [:div {:class "p-4 border-b border-secondary-100 flex gap-4 items-center"}
+    (shared-components/avatar)
+    [:div {:class "flex flex-col gap-2 flex-1"}
+     [:span.skeleton.text {:class "w-10/12"}]
+     [:span.skeleton.text.xs {:class "w-8/12"}]]])
+  ([data]
+   [:a {:href "/conta" :class "p-4 border-b border-secondary-100 flex gap-4 items-center hover:bg-secondary-50 transition-color"}
+    (if (nil? data)
+      (shared-components/avatar)
+      (shared-components/avatar (:avatar-url data)))
+    [:div {:class "flex flex-col flex-1"}
+     [:span {:class "text-secondary-800 font-medium"}
+      (if (nil? data) "Bem vindo" (:full-name data))]
+     [:span {:class "text-secondary-500 text-sm"}
+      (if (nil? data) "Entre para ver seus pedidos" "Bem vindo!")]]]))
+
+(defn links-menu-section
+  []
+  [:div {:class "border-b border-secondary-100 flex flex-col"}
+   [:a {:href "/pedidos" :class "p-4 flex gap-4 items-center text-secondary-700 hover:bg-secondary-50 hover:text-secondary-800 transition-colors"}
+    [:svg {:class "size-6" :xmlns "http://www.w3.org/2000/svg" :fill "none" :viewBox "0 0 24 24" :stroke-width "1.5" :stroke "currentColor"}
+     [:path {:stroke-linecap "round" :stroke-linejoin "round" :d "M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"}]]
+    "Seus Pedidos"]
+   [:a {:href "/ofertas" :class "p-4 flex gap-4 items-center text-secondary-700 hover:bg-secondary-50 hover:text-secondary-800 transition-colors"}
+    [:svg {:class "size-6" :xmlns "http://www.w3.org/2000/svg" :fill "none" :viewBox "0 0 24 24" :stroke-width "1.5" :stroke "currentColor"}
+     [:path {:stroke-linecap "round" :stroke-linejoin "round" :d "m8.99 14.993 6-6m6 3.001c0 1.268-.63 2.39-1.593 3.069a3.746 3.746 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043 3.745 3.745 0 0 1-3.068 1.593c-1.268 0-2.39-.63-3.068-1.593a3.745 3.745 0 0 1-3.296-1.043 3.746 3.746 0 0 1-1.043-3.297 3.746 3.746 0 0 1-1.593-3.068c0-1.268.63-2.39 1.593-3.068a3.746 3.746 0 0 1 1.043-3.297 3.745 3.745 0 0 1 3.296-1.042 3.745 3.745 0 0 1 3.068-1.594c1.268 0 2.39.63 3.068 1.593a3.745 3.745 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.297 3.746 3.746 0 0 1 1.593 3.068ZM9.74 9.743h.008v.007H9.74v-.007Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm4.125 4.5h.008v.008h-.008v-.008Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"}]]
+    "Ofertas"]
+   [:a {:href "/mais-vendidos" :class "p-4 flex gap-4 items-center text-secondary-700 hover:bg-secondary-50 hover:text-secondary-800 transition-colors"}
+    [:svg {:class "size-6" :xmlns "http://www.w3.org/2000/svg" :fill "none" :viewBox "0 0 24 24" :stroke-width "1.5" :stroke "currentColor"}
+     [:path {:stroke-linecap "round" :stroke-linejoin "round" :d "M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456ZM16.894 20.567 16.5 21.75l-.394-1.183a2.25 2.25 0 0 0-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 0 0 1.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 0 0 1.423 1.423l1.183.394-1.183.394a2.25 2.25 0 0 0-1.423 1.423Z"}]]
+    "Mais Vendidos"]
+   [:a {:href "/sobre/contato" :class "p-4 flex gap-4 items-center text-secondary-700 hover:bg-secondary-50 hover:text-secondary-800 transition-colors"}
+    [:svg {:class "size-6" :xmlns "http://www.w3.org/2000/svg" :fill "none" :viewBox "0 0 24 24" :stroke-width "1.5" :stroke "currentColor"}
+     [:path {:stroke-linecap "round" :stroke-linejoin "round" :d "M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 0 1-.825-.242m9.345-8.334a2.126 2.126 0 0 0-.476-.095 48.64 48.64 0 0 0-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0 0 11.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155"}]]
+    "Contato"]])
+
+(defn category-accordion
+  [major-category]
+  [:details {:class "text-secondary-700"}
+   [:summary {:class "cursor-pointer px-4 py-2 hover:bg-secondary-50 transition-colors select-none flex items-center justify-between"}
+    (:title major-category)
+    [:svg {:data-accordion-icon-open "" :class "size-4" :xmlns "http://www.w3.org/2000/svg" :fill "none" :viewBox "0 0 24 24" :stroke-width "1.5" :stroke "currentColor"}
+     [:path {:stroke-linecap "round" :stroke-linejoin "round" :d "m19.5 8.25-7.5 7.5-7.5-7.5"}]]
+    [:svg {:data-accordion-icon-close "" :class "size-4" :xmlns "http://www.w3.org/2000/svg" :fill "none" :viewBox "0 0 24 24" :stroke-width "1.5" :stroke "currentColor"}
+     [:path {:stroke-linecap "round" :stroke-linejoin "round" :d "m4.5 15.75 7.5-7.5 7.5 7.5"}]]]
+   [:div {:class "w-full flex flex-col"}
+    (for [sub (:sub-categories major-category)]
+      [:a {:href  (str "/categorias/" (:slug major-category) "/" (:slug sub))
+           :class "block px-8 py-2 w-full hover:bg-secondary-50 transition-colors"}
+       (:title sub)])
+    [:a {:href  (str "/categorias/" (:slug major-category))
+         :class "block px-8 py-2 w-full hover:bg-secondary-50 transition-colors"}
+     "Ver tudo"]]])
+
+(defn categories-menu-section
+  ([]
+   [:div {:class "flex-1 flex flex-col overflow-y-auto"}
+    [:span {:class "font-medium text-secondary-700 p-4"}
+     "Categorias"]
+    [:ul {:class "space-y-2 w-full"}
+     (for [i (take 12 (range))]
+       [:li {:class "py-2 px-4 w-full"}
+        [:div.skeleton.text {:style (str "width: " (+ 60 (rand-int 39)) "%")}]])]])
+  ([major-categories]
+   [:div {:class "flex-1 flex flex-col overflow-y-auto"}
+    [:span {:class "font-medium text-secondary-700 p-4"}
+     "Categorias"]
+    (for [major major-categories]
+      (category-accordion major))]))
+
 (defn main-menu
   []
   (shared-components/sheet
     {:id "main-menu" :title "Menu"}
-    [:h1 "Hello world"]))
+    (user-menu-section {:full-name  "Mateus Ryan"
+                        :avatar-url "https://avatars.githubusercontent.com/u/46976272?v=4&size=64"})
+    (links-menu-section)
+    (categories-menu-section
+      (list {:title          "Cabelos"
+             :slug           "cabelos"
+             :sub-categories (list {:title "Shapoos" :slug "shampoos"}
+                                   {:title "Leve-in" :slug "leve-in"})}
+            {:title          "Maquiagem"
+             :slug           "maquiagem"
+             :sub-categories (list {:title "Batoms" :slug "batoms"}
+                                   {:title "Base" :slug "base"})}))))
 
 (defn shopping-cart
   []
@@ -215,13 +297,13 @@
     opts
     [:div {:class "flex h-60 min-h-screen flex-col"}
      (header)
-     (main-menu)
-     (shopping-cart)
      (search-modal)
      [:main {:id "content" :class "flex-1"}
       content]
      (footer)
-     (bottom-menu)]))
+     (bottom-menu)
+     (main-menu)
+     (shopping-cart)]))
 
 
 (defn auth-layout
