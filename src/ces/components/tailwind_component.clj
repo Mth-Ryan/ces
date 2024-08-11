@@ -1,5 +1,6 @@
 (ns ces.components.tailwind-component
-  (:require [clojure.java.io :as io]
+  (:require [io.pedestal.log :as l]
+            [clojure.java.io :as io]
             [clojure.string :as str]
             [com.stuartsierra.component :as component]))
 
@@ -18,13 +19,13 @@
 (defn get-settings
   ([] (get-settings (get-executable-name) (str/lower-case (System/getProperty "os.name"))))
   ([executable-name platform]
-    {:is-posix   (or (= platform "linux") (= platform "mac os x")) 
-     :input-css  (io/file (io/resource "assets/css/app.css"))
-     :output-css (io/file (io/resource "public/css/tailwind") "tailwind.min.css")
-     :config     (io/file (io/resource "assets/tailwind.config.js"))
-     :assets-bin (io/file (io/resource "assets") "assets_bin")
-     :cli-bin    (io/file (io/resource "assets") "assets_bin" executable-name)
-     :cli-download-url (str "https://github.com/tailwindlabs/tailwindcss/releases/latest/download/" executable-name)}))
+   {:is-posix         (or (= platform "linux") (= platform "mac os x"))
+    :input-css        (io/file (io/resource "assets/css/app.css"))
+    :output-css       (io/file (io/resource "public/css/tailwind") "tailwind.min.css")
+    :config           (io/file (io/resource "assets/tailwind.config.js"))
+    :assets-bin       (io/file (io/resource "assets") "assets_bin")
+    :cli-bin          (io/file (io/resource "assets") "assets_bin" executable-name)
+    :cli-download-url (str "https://github.com/tailwindlabs/tailwindcss/releases/latest/download/" executable-name)}))
 
 (def default-settings (get-settings))
 
@@ -34,7 +35,7 @@
    (when-not (.exists (settings :cli-bin))
      (.mkdirs (settings :assets-bin))
      (.createNewFile (settings :cli-bin)))
-   (with-open [in  (io/input-stream  (settings :cli-download-url))
+   (with-open [in (io/input-stream (settings :cli-download-url))
                out (io/output-stream (settings :cli-bin))]
      (io/copy in out))
    (when (settings :is-posix)
@@ -46,21 +47,21 @@
   (when-not (.exists (settings :cli-bin))
     (download-cli settings))
   (let [command (-> [(str (settings :cli-bin))
-                      "-i" (str (settings :input-css)) 
-                      "-o" (str (settings :output-css))
-                      "-c" (str (settings :config))]
-                     (concat (when minify ["--minify"]))
-                     (concat (when watch  ["--watch"]))
-                     (vec))
-        process (-> 
+                     "-i" (str (settings :input-css))
+                     "-o" (str (settings :output-css))
+                     "-c" (str (settings :config))]
+                    (concat (when minify ["--minify"]))
+                    (concat (when watch ["--watch"]))
+                    (vec))
+        process (->
                   (ProcessBuilder. command)
                   (.start))]
     (if watch
-      {:watch true :process process} 
-      (do (.waitFor process) 
-          {:watch false :process nil}))))
+      {:watch true :minify minify :process process}
+      (do (.waitFor process)
+          {:watch false :minify minify :process process}))))
 
-(defn stop-cli 
+(defn stop-cli
   [opts]
   (when (opts :watch)
     (.destroy (opts :process))))
@@ -71,16 +72,18 @@
 
   (start
     [component]
-    (println (str ";; Starting Tailwind Component"))
     (let [prod? (not= (get config :run-env :dev) :dev)
-          process (run-cli :watch (not prod?) 
+          process (run-cli :watch (not prod?)
                            :minify prod?)]
+      (l/info :message "Starting Tailwind"
+              :process-opts process)
       (assoc component :process-opts process)))
 
   (stop
     [component]
-    (println ";; Stoping Tailwind Component")
     (stop-cli (:process-opts component))
+    (l/info :message "Stopping Tailwind"
+            :process-opts (:process-opts component))
     (assoc component :process-opts nil)))
 
 (defn new-process [config]

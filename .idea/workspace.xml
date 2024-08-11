@@ -4,12 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="50916221-c507-4e0b-b24d-5b39edf406d4" name="Changes" comment="feat(layout): shop layout behaviour">
+    <list default="true" id="50916221-c507-4e0b-b24d-5b39edf406d4" name="Changes" comment="feat(css): add css cache break on dev and minify on prod">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/config.edn" beforeDir="false" afterPath="$PROJECT_DIR$/resources/config.edn" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/deps.edn" beforeDir="false" afterPath="$PROJECT_DIR$/deps.edn" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ces/components/server_component.clj" beforeDir="false" afterPath="$PROJECT_DIR$/src/ces/components/server_component.clj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ces/components/tailwind_component.clj" beforeDir="false" afterPath="$PROJECT_DIR$/src/ces/components/tailwind_component.clj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ces/pages/shared/layouts.clj" beforeDir="false" afterPath="$PROJECT_DIR$/src/ces/pages/shared/layouts.clj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ces/pages/shared/utils.clj" beforeDir="false" afterPath="$PROJECT_DIR$/src/ces/pages/shared/utils.clj" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,7 +71,7 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="ReplState" timestamp="1723377813007">{:repl-history {:ide [], :local [{:command &quot;(in-ns 'ces.core)&quot;, :offset 17, :ns &quot;user&quot;} {:command &quot;(-main)&quot;, :offset 7, :ns &quot;ces.core&quot;} {:command &quot;(in-ns 'dev)&quot;, :offset 12, :ns &quot;user&quot;} {:command &quot;(component-repl/reset)&quot;, :offset 22, :ns &quot;dev&quot;} {:command &quot;(require '[sqids])&quot;, :offset 18, :ns &quot;user&quot;}], :remote []}}</component>
+  <component name="ReplState" timestamp="1723379099911">{:repl-history {:ide [], :local [{:command &quot;(in-ns 'ces.core)&quot;, :offset 17, :ns &quot;user&quot;} {:command &quot;(-main)&quot;, :offset 7, :ns &quot;ces.core&quot;} {:command &quot;(in-ns 'dev)&quot;, :offset 12, :ns &quot;user&quot;} {:command &quot;(component-repl/reset)&quot;, :offset 22, :ns &quot;dev&quot;} {:command &quot;(require '[sqids])&quot;, :offset 18, :ns &quot;user&quot;}], :remote []}}</component>
   <component name="RunManager" selected="Clojure REPL.Repl">
     <configuration default="true" type="Babashka" factoryName="BabashkaLocalRepl" activateToolWindowBeforeRun="false">
       <setting name="displayName" value="" />
@@ -145,7 +144,7 @@
       <workItem from="1722090706492" duration="36361000" />
       <workItem from="1722198772265" duration="6812000" />
       <workItem from="1722277287097" duration="3000" />
-      <workItem from="1723292106114" duration="36993000" />
+      <workItem from="1723292106114" duration="38280000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <option name="closed" value="true" />
@@ -251,7 +250,15 @@
       <option name="project" value="LOCAL" />
       <updated>1723339657217</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="feat(css): add css cache break on dev and minify on prod">
+      <option name="closed" value="true" />
+      <created>1723377889530</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1723377889530</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -269,7 +276,8 @@
     <MESSAGE value="feat(login): add login redirect logic" />
     <MESSAGE value="feat(auth): add login and signup pages implementation" />
     <MESSAGE value="feat(layout): shop layout behaviour" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat(layout): shop layout behaviour" />
+    <MESSAGE value="feat(css): add css cache break on dev and minify on prod" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat(css): add css cache break on dev and minify on prod" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

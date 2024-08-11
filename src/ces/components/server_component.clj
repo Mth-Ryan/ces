@@ -1,5 +1,6 @@
 (ns ces.components.server-component
     (:require [com.stuartsierra.component :as component]
+              [io.pedestal.log :as l]
               [io.pedestal.http :as http]
               [ces.routes :as routes]))
 
@@ -9,7 +10,6 @@
 
   (start
     [component]
-    (println (str ";; Starting Server Component on " (-> config :web-server :port)))
     (let [server (-> {::http/routes routes/routes
                       ::http/type :jetty
                       ::http/join? false
@@ -19,13 +19,17 @@
                      (http/default-interceptors)
                      (http/create-server)
                      (http/start))]
+      (l/info :message "Starting Server Component" 
+              :port (-> config :web-server :port)
+              :server server)
       (assoc component :server server)))
 
   (stop
     [component]
-    (println ";; Stoping Server Component")
     (when-let [server (:server component)]
       (http/stop server))
+    (l/info :message "Stopping Server Component"
+            :port (-> config :web-server :port))
     (assoc component :server nil)))
 
 (defn new-server [config]
