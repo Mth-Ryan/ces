@@ -1,6 +1,8 @@
 <component name="libraryTable">
   <library name="Deps: io.dropwizard.metrics/metrics-jmx:4.2.19">
-    <CLASSES />
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/io/dropwizard/metrics/metrics-jmx/4.2.19/metrics-jmx-4.2.19.jar!/" />
+    </CLASSES>
     <JAVADOC />
     <SOURCES />
   </library>

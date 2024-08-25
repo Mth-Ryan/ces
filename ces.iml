@@ -18,7 +18,7 @@
     <orderEntry type="library" name="Deps: org.clojure/clojure:1.11.3" level="project" />
     <orderEntry type="library" name="Deps: javax.activation/javax.activation-api:1.2.0" level="project" />
     <orderEntry type="library" name="Deps: commons-codec:1.16.1" level="project" />
-    <orderEntry type="library" name="Deps: org.clojure/tools.analyzer:1.1.1" level="project" />
+    <orderEntry type="library" name="Deps: org.clojure/tools.analyzer:1.1.0" level="project" />
     <orderEntry type="library" name="Deps: org.sqids/sqids:0.1.0" level="project" />
     <orderEntry type="library" name="Deps: org.eclipse.jetty/jetty-xml:11.0.20" level="project" />
     <orderEntry type="library" name="Deps: org.eclipse.jetty/jetty-servlet:11.0.20" level="project" />
@@ -33,7 +33,7 @@
     <orderEntry type="library" name="Deps: jakarta.transaction/jakarta.transaction-api:2.0.0" level="project" />
     <orderEntry type="library" name="Deps: org.eclipse.jetty/jetty-http:11.0.20" level="project" />
     <orderEntry type="library" name="Deps: org.eclipse.jetty/jetty-util:11.0.20" level="project" />
-    <orderEntry type="library" name="Deps: org.clojure/tools.analyzer.jvm:1.2.3" level="project" />
+    <orderEntry type="library" name="Deps: org.clojure/tools.analyzer.jvm:1.2.2" level="project" />
     <orderEntry type="library" name="Deps: org.eclipse.jetty.websocket/websocket-jakarta-common:11.0.20" level="project" />
     <orderEntry type="library" name="Deps: io.pedestal/pedestal.common:0.7.0" level="project" />
     <orderEntry type="library" name="Deps: io.pedestal/pedestal.log:0.7.0" level="project" />
@@ -101,7 +101,7 @@
     <orderEntry type="library" name="Deps: ring/ring-core:1.12.0" level="project" />
     <orderEntry type="library" name="Deps: org.clojure/core.cache:1.0.225" level="project" />
     <orderEntry type="library" name="Deps: org.ow2.asm/asm-tree:9.6" level="project" />
-    <orderEntry type="library" name="Deps: org.clojure/core.async:1.6.681" level="project" />
+    <orderEntry type="library" name="Deps: org.clojure/core.async:1.6.673" level="project" />
     <orderEntry type="library" name="Deps: com.fasterxml.jackson.dataformat/jackson-dataformat-smile:2.15.2" level="project" />
     <orderEntry type="library" name="Deps: javax.xml.bind/jaxb-api:2.4.0-b180830.0359" level="project" />
     <orderEntry type="library" name="Deps: org.clj-commons/pretty:3.0.0" level="project" />

@@ -3,12 +3,8 @@
             [clojure.set :as set]
             [ces.pages.shop.routes :as shop-routes]))
 
-(defn respond-hello
-  [request]
-  {:status 200 :body "Hello world!"})
-
 (def routes
-  (-> (set/union 
+  (-> (set/union
         shop-routes/routes)
       (route/expand-routes)))
 

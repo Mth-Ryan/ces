@@ -1,6 +1,8 @@
 <component name="libraryTable">
   <library name="Deps: io.pedestal/pedestal.interceptor:0.7.0">
-    <CLASSES />
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/io/pedestal/pedestal.interceptor/0.7.0/pedestal.interceptor-0.7.0.jar!/" />
+    </CLASSES>
     <JAVADOC />
     <SOURCES />
   </library>

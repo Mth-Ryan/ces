@@ -1,6 +1,8 @@
 <component name="libraryTable">
   <library name="Deps: io.opentracing/opentracing-noop:0.33.0">
-    <CLASSES />
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/io/opentracing/opentracing-noop/0.33.0/opentracing-noop-0.33.0.jar!/" />
+    </CLASSES>
     <JAVADOC />
     <SOURCES />
   </library>
