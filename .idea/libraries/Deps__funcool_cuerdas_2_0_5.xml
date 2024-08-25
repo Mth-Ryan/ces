@@ -1,8 +1,6 @@
 <component name="libraryTable">
   <library name="Deps: funcool/cuerdas:2.0.5">
-    <CLASSES>
-      <root url="jar://$MAVEN_REPOSITORY$/funcool/cuerdas/2.0.5/cuerdas-2.0.5.jar!/" />
-    </CLASSES>
+    <CLASSES />
     <JAVADOC />
     <SOURCES />
   </library>

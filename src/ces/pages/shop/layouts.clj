@@ -16,7 +16,9 @@
   [:button {:type    "button"
             :id      "header-search-button"
             :title   "Pesquisar"
-            :onclick "document.getElementById('search-modal').showModal(); document.body.style.overflow = 'hidden';"
+            :onclick (str "document.getElementById('search-modal').showModal();"
+                          "document.body.style.overflow = 'hidden';"
+                          "document.getElementById('search-modal-form').querySelector('input').focus();")
             :class   "hidden sm:block rounded-lg border border-transparent bg-transparent p-1.5 text-center text-sm font-medium text-gray-700 shadow-none transition-all hover:bg-gray-100 disabled:bg-transparent disabled:text-gray-400"}
    [:svg {:class "size-6" :xmlns "http://www.w3.org/2000/svg" :fill "none" :viewBox "0 0 24 24" :stroke-width "1.5" :stroke "currentColor"}
     [:path {:stroke-linecap "round" :stroke-linejoin "round" :d "m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"}]]])
@@ -218,11 +220,11 @@
    [:div {:class "w-full flex flex-col"}
     (for [sub (:sub-categories major-category)]
       [:a {:href  (str "/categorias/" (:slug major-category) "/" (:slug sub))
-           :class "block px-8 py-2 w-full hover:bg-secondary-50 transition-colors"}
-       (:title sub)])
+           :class "block px-4 py-2 w-full hover:bg-secondary-50 transition-colors"}
+       [:span {:class "py-2 px-4 border-s border-secondary-100"} (:title sub)]])
     [:a {:href  (str "/categorias/" (:slug major-category))
-         :class "block px-8 py-2 w-full hover:bg-secondary-50 transition-colors"}
-     "Ver tudo"]]])
+         :class "block px-4 py-2 w-full hover:bg-secondary-50 transition-colors"}
+     [:span {:class "py-2 px-4 border-s border-secondary-100"} "Ver tudo"]]]])
 
 (defn categories-menu-section
   ([]
@@ -368,7 +370,34 @@
   []
   (shared-components/modal
     {:id "search-modal"}
-    [:h1 "Hello"]))
+    [:div {:class "flex flex-col bg-secondary-50"}
+     [:form {:id "search-modal-form" :action "/pesquisar" :class "flex items-center py-4 ps-4 pe-16 border-b transition-colors border-secondary-100 focus-within:border-secondary-200 bg-white w-full"}
+      [:input {:class "bg-transparent outline-none p-0 flex-1 w-full text-secondary-800 placeholder:text-secondary-400 border-transparent focus:border-transparent focus:ring-0"
+               :placeholder "Pesquisar"}
+       [:button {:type "submit" :class "bg-secondary-100 text-secondary-400 rounded-md px-2 py-1"}
+        [:svg {:xmlns "http://www.w3.org/2000/svg"
+               :fill "none"
+               :viewBox "0 0 24 24"
+               :stroke-width "2"
+               :stroke "currentColor"
+               :class "size-4"}
+        [:path {:stroke-linecap "round"
+               :stroke-linejoin "round"
+               :d "m7.49 12-3.75 3.75m0 0 3.75 3.75m-3.75-3.75h16.5V4.499"}]]]]]
+     [:div {:class "flex gap-4 py-2 px-4 overflow-auto"}
+      [:a {:href "/mais-vendidos" :class "bg-white shadow-sm flex-1 min-w-fit text-sm flex items-center justify-center gap-2 item-center rounded-md border border-secondary-100 text-secondary-400 py-1 px-2"}
+        [:svg {:xmlns "http://www.w3.org/2000/svg" :fill "none" :viewBox "0 0 24 24" :stroke-width "2" :stroke "currentColor" :class "size-4"} [:path {:stroke-linecap "round" :stroke-linejoin "round" :d "M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456ZM16.894 20.567 16.5 21.75l-.394-1.183a2.25 2.25 0 0 0-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 0 0 1.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 0 0 1.423 1.423l1.183.394-1.183.394a2.25 2.25 0 0 0-1.423 1.423Z"}]]
+       "Mais Vendidos"]
+      [:a {:href "/ofertas" :class "bg-white shadow-sm flex-1 min-w-fit text-sm flex items-center justify-center gap-2 item-center rounded-md border border-secondary-100 text-secondary-400 py-1 px-2"}
+       [:svg {:xmlns "http://www.w3.org/2000/svg" :fill "none" :viewBox "0 0 24 24" :stroke-width "2" :stroke "currentColor" :class "size-4"} [:path {:stroke-linecap "round" :stroke-linejoin "round" :d "m8.99 14.993 6-6m6 3.001c0 1.268-.63 2.39-1.593 3.069a3.746 3.746 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043 3.745 3.745 0 0 1-3.068 1.593c-1.268 0-2.39-.63-3.068-1.593a3.745 3.745 0 0 1-3.296-1.043 3.746 3.746 0 0 1-1.043-3.297 3.746 3.746 0 0 1-1.593-3.068c0-1.268.63-2.39 1.593-3.068a3.746 3.746 0 0 1 1.043-3.297 3.745 3.745 0 0 1 3.296-1.042 3.745 3.745 0 0 1 3.068-1.594c1.268 0 2.39.63 3.068 1.593a3.745 3.745 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.297 3.746 3.746 0 0 1 1.593 3.068ZM9.74 9.743h.008v.007H9.74v-.007Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm4.125 4.5h.008v.008h-.008v-.008Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"}]]
+       "Ofertas"]
+      [:a {:href "/categorias" :class "bg-white shadow-sm flex-1 min-w-fit text-sm flex items-center justify-center gap-2 item-center rounded-md border border-secondary-100 text-secondary-400 py-1 px-2"}
+       [:svg {:xmlns "http://www.w3.org/2000/svg" :fill "none" :viewBox "0 0 24 24" :stroke-width "2" :stroke "currentColor" :class "size-4"} [:path {:stroke-linecap "round" :stroke-linejoin "round" :d "M9.568 3H5.25A2.25 2.25 0 0 0 3 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 0 0 5.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 0 0 9.568 3Z"}] [:path {:stroke-linecap "round" :stroke-linejoin "round" :d "M6 6h.008v.008H6V6Z"}]]
+       "Categorias"]
+      [:a {:href "/em-destaque" :class "bg-white shadow-sm flex-1 min-w-fit text-sm flex items-center justify-center gap-2 item-center rounded-md border border-secondary-100 text-secondary-400 py-1 px-2"}
+       [:svg {:xmlns "http://www.w3.org/2000/svg" :fill "none" :viewBox "0 0 24 24" :stroke-width "2" :stroke "currentColor" :class "size-4"} [:path {:stroke-linecap "round" :stroke-linejoin "round" :d "M15.042 21.672 13.684 16.6m0 0-2.51 2.225.569-9.47 5.227 7.917-3.286-.672Zm-7.518-.267A8.25 8.25 0 1 1 20.25 10.5M8.288 14.212A5.25 5.25 0 1 1 17.25 10.5"}]]
+       "Em destaque"]]]))
+
 
 
 (defn bottom-menu
@@ -379,7 +408,9 @@
      [:path {:stroke-linecap "round" :stroke-linejoin "round" :d "m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"}]]
     "Home"]
    [:button {:class   "p-2 flex flex-col gap-1 items-center"
-             :onclick "document.getElementById('search-modal').showModal(); document.body.style.overflow = 'hidden';"}
+             :onclick (str "document.getElementById('search-modal').showModal();"
+                           "document.body.style.overflow = 'hidden';"
+                           "document.getElementById('search-modal-form').querySelector('input').focus();")}
     [:svg {:class "size-6" :xmlns "http://www.w3.org/2000/svg" :fill "none" :viewBox "0 0 24 24" :stroke-width "1.5" :stroke "currentColor"}
      [:path {:stroke-linecap "round" :stroke-linejoin "round" :d "m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"}]]
     "Pesquisar"]

@@ -1,8 +1,6 @@
 <component name="libraryTable">
   <library name="Deps: org.eclipse.jetty/jetty-plus:11.0.20">
-    <CLASSES>
-      <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/jetty/jetty-plus/11.0.20/jetty-plus-11.0.20.jar!/" />
-    </CLASSES>
+    <CLASSES />
     <JAVADOC />
     <SOURCES />
   </library>
