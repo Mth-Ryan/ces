@@ -3,6 +3,30 @@
             [ces.pages.shared.layouts :as shared-layouts]
             [ces.pages.shared.utils :refer [make-title format-currency]]))
 
+(def footer-items
+  [{:title "Product"
+    :items [{:label "Features" :href "javascript:void(0)"}
+            {:label "Customers" :href "javascript:void(0)"}
+            {:label "Why us?" :href "javascript:void(0)"}
+            {:label "Pricing" :href "javascript:void(0)"}]}
+   {:title "Docs & Help"
+    :items [{:label "Documentation" :href "javascript:void(0)"}
+            {:label "Training" :href "javascript:void(0)"}
+            {:label "System status" :href "javascript:void(0)"}
+            {:label "FAQ's" :href "javascript:void(0)"}
+            {:label "Help Center" :href "javascript:void(0)"}]}
+   {:title "About us"
+    :items [{:label "About us" :href "javascript:void(0)"}
+            {:label "Careers" :href "javascript:void(0)"}
+            {:label "Leadership" :href "javascript:void(0)"}
+            {:label "Blog" :href "javascript:void(0)"}
+            {:label "Events" :href "javascript:void(0)"}]}
+   {:title "Get in touch"
+    :items [{:label "Contact" :href "javascript:void(0)"}
+            {:label "Support" :href "javascript:void(0)"}
+            {:label "Partners" :href "javascript:void(0)"}
+            {:label "Join research" :href "javascript:void(0)"}]}])
+
 (defn menu-button []
   [:button {:type    "button"
             :id      "main-menu-button"
@@ -70,105 +94,18 @@
        (shared-components/logo {:class "h-5 mb-4 text-secondary-700"})
        [:p "Expertly made, responsive, accessible components in React and HTML ready to be used on your website or app. Just copy and paste them on your Tailwind CSS project."]]
 
-      [:nav {:class           "col-span-2 md:col-span-4 lg:col-span-2"
-             :aria-labelledby "footer-product-5-logo"}
-       [:h3 {:class "mb-6 text-base font-medium text-secondary-700"
-             :id    "footer-product-5-logo"}
-        "Product"]
-       [:ul
-        [:li {:class "mb-2 leading-6"}
-         [:a {:href  "javascript:void(0)"
-              :class "transition-colors duration-300 hover:text-purple-500 focus:text-purple-600"}
-          "Features"]]
-        [:li {:class "mb-2 leading-6"}
-         [:a {:href  "javascript:void(0)"
-              :class "transition-colors duration-300 hover:text-purple-500 focus:text-purple-600"}
-          "Customers"]]
-        [:li {:class "mb-2 leading-6"}
-         [:a {:href  "javascript:void(0)"
-              :class "transition-colors duration-300 hover:text-purple-500 focus:text-purple-600"}
-          "Why us?"]]
-        [:li {:class "mb-2 leading-6"}
-         [:a {:href  "javascript:void(0)"
-              :class "transition-colors duration-300 hover:text-purple-500 focus:text-purple-600"}
-          "Pricing"]]]]
-
-      [:nav {:class           "col-span-2 md:col-span-4 lg:col-span-2"
-             :aria-labelledby "footer-docs-5-logo"}
-       [:h3 {:class "mb-6 text-base font-medium text-secondary-700"
-             :id    "footer-docs-5-logo"}
-        "Docs & Help"]
-       [:ul
-        [:li {:class "mb-2 leading-6"}
-         [:a {:href  "javascript:void(0)"
-              :class "transition-colors duration-300 hover:text-purple-500 focus:text-purple-600"}
-          "Documentation"]]
-        [:li {:class "mb-2 leading-6"}
-         [:a {:href  "javascript:void(0)"
-              :class "transition-colors duration-300 hover:text-purple-500 focus:text-purple-600"}
-          "Training"]]
-        [:li {:class "mb-2 leading-6"}
-         [:a {:href  "javascript:void(0)"
-              :class "transition-colors duration-300 hover:text-purple-500 focus:text-purple-600"}
-          "System status"]]
-        [:li {:class "mb-2 leading-6"}
-         [:a {:href  "javascript:void(0)"
-              :class "transition-colors duration-300 hover:text-purple-500 focus:text-purple-600"}
-          "FAQ's"]]
-        [:li {:class "mb-2 leading-6"}
-         [:a {:href  "javascript:void(0)"
-              :class "transition-colors duration-300 hover:text-purple-500 focus:text-purple-600"}
-          "Help Center"]]]]
-
-      [:nav {:class           "col-span-2 md:col-span-4 lg:col-span-2"
-             :aria-labelledby "footer-about-5-logo"}
-       [:h3 {:class "mb-6 text-base font-medium text-secondary-700"
-             :id    "footer-about-5-logo"}
-        "About us"]
-       [:ul
-        [:li {:class "mb-2 leading-6"}
-         [:a {:href  "javascript:void(0)"
-              :class "transition-colors duration-300 hover:text-purple-500 focus:text-purple-600"}
-          "About us"]]
-        [:li {:class "mb-2 leading-6"}
-         [:a {:href  "javascript:void(0)"
-              :class "transition-colors duration-300 hover:text-purple-500 focus:text-purple-600"}
-          "Careers"]]
-        [:li {:class "mb-2 leading-6"}
-         [:a {:href  "javascript:void(0)"
-              :class "transition-colors duration-300 hover:text-purple-500 focus:text-purple-600"}
-          "Leadership"]]
-        [:li {:class "mb-2 leading-6"}
-         [:a {:href  "javascript:void(0)"
-              :class "transition-colors duration-300 hover:text-purple-500 focus:text-purple-600"}
-          "Blog"]]
-        [:li {:class "mb-2 leading-6"}
-         [:a {:href  "javascript:void(0)"
-              :class "transition-colors duration-300 hover:text-purple-500 focus:text-purple-600"}
-          "Events"]]]]
-
-      [:nav {:class           "col-span-2 md:col-span-4 lg:col-span-2"
-             :aria-labelledby "footer-get-in-touch-5-logo"}
-       [:h3 {:class "mb-6 text-base font-medium text-secondary-700"
-             :id    "footer-get-in-touch-5-logo"}
-        "Get in touch"]
-       [:ul
-        [:li {:class "mb-2 leading-6"}
-         [:a {:href  "javascript:void(0)"
-              :class "transition-colors duration-300 hover:text-purple-500 focus:text-purple-600"}
-          "Contact"]]
-        [:li {:class "mb-2 leading-6"}
-         [:a {:href  "javascript:void(0)"
-              :class "transition-colors duration-300 hover:text-purple-500 focus:text-purple-600"}
-          "Support"]]
-        [:li {:class "mb-2 leading-6"}
-         [:a {:href  "javascript:void(0)"
-              :class "transition-colors duration-300 hover:text-purple-500 focus:text-purple-600"}
-          "Partners"]]
-        [:li {:class "mb-2 leading-6"}
-         [:a {:href  "javascript:void(0)"
-              :class "transition-colors duration-300 hover:text-purple-500 focus:text-purple-600"}
-          "Join research"]]]]]]]])
+      (for [{:keys [title items]} footer-items]
+           [:nav {:class           "col-span-2 md:col-span-4 lg:col-span-2"
+                  :aria-labelledby (str "footer-" (clojure.string/replace (clojure.string/lower-case title) " " "-") "-logo")}
+            [:h3 {:class "mb-6 text-base font-medium text-secondary-700"
+                  :id    (str "footer-" (clojure.string/replace (clojure.string/lower-case title) " " "-") "-logo")}
+             title]
+            [:ul
+             (for [{:keys [label href]} items]
+                  [:li {:class "mb-2 leading-6"}
+                   [:a {:href  href
+                        :class "transition-colors duration-300 hover:text-purple-500 focus:text-purple-600"}
+                    label]])]])]]]])
 
 (defn user-menu-section
   ([]
