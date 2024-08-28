@@ -2,29 +2,31 @@
   (:require [clojure.core.async :as a]
             [io.pedestal.log :as l]
             [io.pedestal.http :as http]
-            [io.pedestal.http.sse :as sse]
+            [io.pedestal.http.route :as route]
             [io.pedestal.interceptor :as interceptor]))
 
 (defn reload-chan-interceptor
-  [chan]
+  [publication]
   (interceptor/interceptor
     {:name  ::reload-chan-interceptor
-     :enter (fn [context] (assoc context ::reload-chan chan))
-     :leave (fn [context] (dissoc context ::reload-chan))}))
-
-(defn reload-handler
-  [event-chan context]
-  (while true
-    (let [message (a/<!! (context ::reload-chan))]
-         (a/>!! event-chan {:name "reload" :data message}))))
+     :enter (fn [context]
+              (let [chan (a/chan)]
+                (a/sub publication :reload chan)
+                (assoc context ::reload-chan chan)))
+     :leave (fn [context]
+              (when-let [chan (::reload-chan context)]
+                (a/unsub publication :reload chan)
+                (a/close! chan))
+              (dissoc context ::reload-chan))}))
 
 (defn make-routes
-  [reload-chan]
-  #{["/reload" :get [(reload-chan-interceptor reload-chan) (sse/start-event-stream reload-handler)] :route-name :hot-reload]})
+  [reload-publication]
+  (route/expand-routes #{}))
 
 (defn start [config]
   (let [reload-chan (a/chan)
-        routes (make-routes reload-chan)
+        reload-publication (a/pub reload-chan :msg-type)
+        routes (make-routes reload-publication)
         server (-> {::http/routes         routes
                     ::http/type           :jetty
                     ::http/join?          false
@@ -35,8 +37,16 @@
                    (http/start))]
     (do
       (l/info :message "Starting dev server")
+      (let [out-chan (a/chan)]
+        (a/sub reload-publication :reload out-chan)
+        (a/go-loop []
+          (let [{:keys [message]} (a/<! out-chan)]
+            (l/info :message "Sending reload event" :reload message)
+            (recur))))
       (.addShutdownHook
         (Runtime/getRuntime)
         (new Thread #((do (http/stop server)
                           (a/close! reload-chan)))))
-      {:server server :reload-chan reload-chan})))
+      {:server server
+       :reload (fn []
+                 (a/>!! reload-chan {:msg-type :reload :message "true"}))})))
