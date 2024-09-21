@@ -1,14 +1,19 @@
 (ns ces.core
   (:require [ces.config :as conf]
             [com.stuartsierra.component :as component]
+            [next.jdbc.connection :as connection]
             [ces.components.tailwind-component :as tailwind-component]
-            [ces.components.server-component :as server-component]))
+            [ces.components.server-component :as server-component])
+  (:import (com.zaxxer.hikari HikariDataSource)))
 
 (defn ces-system
   [config]
   (component/system-map
    :tailwind-component (tailwind-component/new-process config)
-   :server-component (server-component/new-server config)))
+   :data-source        (connection/component HikariDataSource (:db config))
+   :server-component   (component/using
+                         (server-component/new-server config)
+                         [:data-source])))
 
 (defn -main []
   (let [system (-> (conf/read-config)

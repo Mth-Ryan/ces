@@ -1,4 +1,7 @@
 {:app        {:shop-title       "Ecommerce"
               :management-title "Ecommerce Management"}
  :web-server {:port #long #or [#env CES_PORT 8000]}
+ :db         {:jdbcUrl  #or [#env CES_DB_URL  "jdbc:postgresql://localhost:5432/ces"]
+              :username #or [#env CES_DB_USER "postgres"]
+              :password #or [#env CES_DB_PASS "postgres"]}
  :run-env    :dev}
